@@ -24,6 +24,7 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix=1
+            - TokenRelay=
         - id: video-service
           uri: lb://video-service
           predicates:
