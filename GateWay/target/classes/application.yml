@@ -1,0 +1,56 @@
+server:
+  # 服务端口号 9000-9999
+  port: 9000
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
+        namespace: public
+        group: DEFAULT_GROUP
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        namespace: public
+        group: DEFAULT_GROUP
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+        - id: video-service
+          uri: lb://video-service
+          predicates:
+            - Path=/video/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+  config:
+    import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: gateway
+            client-secret: zZ0GUEzcF0ie72J5jXCIW7lbUKfH7Ajf
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/auth/realms/VideoApp
+            authorization-uri: http://localhost:8080/auth/realms/VideoApp/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/auth/realms/VideoApp/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/auth/realms/VideoApp/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.server: DEBUG
