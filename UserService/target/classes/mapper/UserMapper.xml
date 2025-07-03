@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="generator.domain.User">
+            <id property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="user_name" column="user_name" jdbcType="VARCHAR"/>
+            <result property="user_password" column="user_password" jdbcType="VARCHAR"/>
+            <result property="iphone" column="Iphone" jdbcType="VARCHAR"/>
+            <result property="createtime" column="createtime" jdbcType="TIMESTAMP"/>
+            <result property="updatetime" column="updatetime" jdbcType="TIMESTAMP"/>
+            <result property="permession" column="permession" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,user_name,user_password,
+        Iphone,createtime,updatetime,
+        permession
+    </sql>
+</mapper>
