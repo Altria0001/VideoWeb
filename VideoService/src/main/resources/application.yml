@@ -12,12 +12,12 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         ip: 127.0.0.1
-        namespace: public
+        namespace: 公共
         group: DEFAULT_GROUP
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
-        namespace: public
+        namespace: 公共
         group: DEFAULT_GROUP
   config:
     import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
@@ -29,8 +29,3 @@ spring:
   profiles:
     active: dev
 sky:
-  alioss:
-    endpoint: oss-cn-shanghai.aliyuncs.com  # 根据实际创建的地域填写
-    access-key-id: LTAI5tKLWXqYUpta4LTELZzP      # 替换为你的AccessKey ID
-    access-key-secret: 3McMhkvs7Qy41eWISaZL3lnTKjvul3  # 替换为你的AccessKey Secret
-    bucket-name: altri          # 替换为你的Bucket名称
