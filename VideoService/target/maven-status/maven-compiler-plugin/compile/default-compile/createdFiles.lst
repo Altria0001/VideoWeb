@@ -1,0 +1,5 @@
+generator\config\OssConfiguration.class
+generator\config\AliOssUtil.class
+generator\VideoServiceApplication.class
+generator\config\AliOssProperties.class
+generator\controller\VideoController.class

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Keycloak SSO 网关前端测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f6fa; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 60px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ddd; padding: 32px; }
+        h2 { text-align: center; color: #2d8cf0; }
+        button { margin: 8px 0; padding: 8px 18px; border: none; border-radius: 4px; background: #2d8cf0; color: #fff; cursor: pointer; font-size: 16px; }
+        button.logout { background: #e74c3c; }
+        .result { margin-top: 18px; background: #f0f9ff; border-left: 4px solid #2d8cf0; padding: 12px; border-radius: 4px; word-break: break-all; }
+        .token { font-size: 12px; color: #888; word-break: break-all; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Keycloak SSO 网关前端测试</h2>
+    <div>
+        <button onclick="callApi('/user/public/hello')">访问公开接口（AJAX）</button>
+        <button onclick="callApi('/user/hello')">访问需登录接口（AJAX）</button>
+        <button onclick="window.location.href='/user/hello'">访问需登录接口（页面跳转，体验SSO）</button>
+        <button class="logout" onclick="logout()">登出</button>
+    </div>
+    <div id="status" style="margin-top:16px;"></div>
+    <div class="result" id="result"></div>
+    <div class="token" id="token"></div>
+</div>
+<script>
+function callApi(path) {
+    fetch(path, { credentials: 'include' })
+        .then(async res => {
+            let text = await res.text();
+            document.getElementById('result').innerText = `状态码: ${res.status}\n返回内容: ${text}`;
+            if(res.status === 401 || res.status === 403) {
+                document.getElementById('status').innerText = '未登录或无权限，尝试自动跳转SSO登录...';
+                // 跳转到SSO登录页
+                window.location.href = '/oauth2/authorization/keycloak';
+            } else {
+                document.getElementById('status').innerText = '已登录或匿名访问成功';
+            }
+        })
+        .catch(e => {
+            document.getElementById('result').innerText = '请求出错: ' + e;
+        });
+}
+
+function logout() {
+    // 直接跳转到Keycloak登出接口
+    window.location.href = '/logout';
+}
+
+// 检查当前登录状态
+fetch('/user/hello', { credentials: 'include' })
+    .then(async res => {
+        if(res.status === 200) {
+            document.getElementById('status').innerText = '当前已登录';
+        } else {
+            document.getElementById('status').innerText = '当前未登录';
+        }
+    });
+</script>
+</body>
+</html> 
