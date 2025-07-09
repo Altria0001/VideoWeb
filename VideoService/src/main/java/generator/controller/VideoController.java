@@ -18,7 +18,7 @@ import java.util.UUID;
 public class VideoController {
 	@Autowired
 	private AliOssUtil aliOssUtil;
-	@RequestMapping("/public/test")
+	@RequestMapping("/user/test")
 	public String test(){
 		return "test";
 	}
@@ -43,4 +43,5 @@ public class VideoController {
 
 		return Result.fail(MessageConstant.UPLOAD_FAILED);
 	}
+
 }

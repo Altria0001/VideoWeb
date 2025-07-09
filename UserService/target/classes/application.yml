@@ -26,7 +26,7 @@ spring:
 keycloak:
   auth-server-url: http://localhost:8080/auth  # Keycloak 地址
   realm: VideoApp                              # 领域名称
-  resource: user-service                       # UserService 的客户端 ID（若 Keycloak 中注册了，需一致；也可省略，通过公钥验证）
+  resource: videoback                       # UserService 的客户端 ID（若 Keycloak 中注册了，需一致；也可省略，通过公钥验证）
   bearer-only: true                            # 资源服务，仅验证 JWT，不处理重定向
   use-resource-role-mappings: true             # 启用角色映射
 logging:

@@ -12,12 +12,12 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         ip: 127.0.0.1
-        namespace: 公共
+        namespace: public
         group: DEFAULT_GROUP
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
-        namespace: 公共
+        namespace: public
         group: DEFAULT_GROUP
   config:
     import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
@@ -29,3 +29,14 @@ spring:
   profiles:
     active: dev
 sky:
+  alioss:
+    endpoint: oss-cn-shanghai.aliyuncs.com  # 根据实际创建的地域填写
+    access-key-id: LTAI5tKLWXqYUpta4LTELZzP      # 替换为你的AccessKey ID
+    access-key-secret: 3McMhkvs7Qy41eWISaZL3lnTKjvul3  # 替换为你的AccessKey Secret
+    bucket-name: altri          # 替换为你的Bucket名称
+keycloak:
+  auth-server-url: http://localhost:8080/auth  # Keycloak 地址
+  realm: VideoApp                              # 领域名称
+  resource: videoback                       # UserService 的客户端 ID（若 Keycloak 中注册了，需一致；也可省略，通过公钥验证）
+  bearer-only: true                            # 资源服务，仅验证 JWT，不处理重定向
+  use-resource-role-mappings: true             # 启用角色映射

@@ -28,7 +28,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
 	}
 
-	/**
+	/** 
 	 * 配置安全策略
 	 */
 	@Override
